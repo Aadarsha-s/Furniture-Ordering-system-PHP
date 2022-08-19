@@ -16,6 +16,11 @@ $result = $con->query($sql);
 $sql2 = "SELECT * FROM `furniture_product` WHERE product_views > 0 ORDER BY product_views DESC LIMIT 5";
 $result2 = $con->query($sql2);
 
+$sql3 = "SELECT * FROM furniture_product WHERE categories_id = '2' ORDER BY id ASC LIMIT 2";
+$result3 = $con->query($sql3);
+
+
+
 if (isset($_POST['add'])){
     // print_r($_POST['product_id']);
     if(isset($_SESSION['cart'])){
@@ -92,10 +97,27 @@ if(isset($_POST["savert"])){
 			<input type="hidden" name="product_id"  value="<?php echo $rows['id']; ?>"/>
         </span>
         </form>
+<br><br>
+    <div style=" margin-left: 170px;">
+      <p><h4>Similar Products</h4></p>
+      <?php 
+		while($rows = mysqli_fetch_assoc($result3)){
+    ?>
+    <div class = "image_display_in_block">
+            <spam><a style ="text-decoration:none;color: #333; font-size:17px;" href="product_display.php?id=<?php echo $rows['id'];?>"><img src="<?php echo 'images/'. $rows['image']; ?>" width ="200" height="250">
+            <?php echo $rows['name'];?><br>
+            <div style="color:rgb(255, 166, 0);"><b><?php echo 'Rs.'.$rows['price'];?></b></div>
+        </a>
+        </div>
+      <?php
+      }
+      ?>
+  </div>
 
 
-  <form style=" margin: 40px 0 0 300px; width:30%; border: 1px solid black; border: 3px solid #f1f1f1;
-    border-radius: 5px; padding: 15px" method="post">
+
+  <form style=" margin: 25rem 0 0 200px; width:30%; border: 1px solid black; border: 3px solid #f1f1f1;
+    border-radius: 5px; padding: 15px; position: absolute; float: left" method="post">
     <p><h4>Feedback</h4></p><hr>
   <?php
   if (session_status() == PHP_SESSION_NONE) {
@@ -146,8 +168,8 @@ if(isset($_POST["savert"])){
 }
 ?>
 <div style=" position: absolute;
-  right: 0; bottom: -347px; border: 1px solid black; border: 3px solid #f1f1f1;
-    border-radius: 5px; padding: 15px; margin: 30px 200px 0 0; height:400px; overflow: auto;" >
+  right: 0; bottom: -48rem; border: 1px solid black; border: 3px solid #f1f1f1;
+    border-radius: 5px; padding: 15px; margin: 25rem 200px 0 0; height:350px; overflow: auto;" >
 <p><h4>Rating and Review</h4></p><hr>
 <?php
 $pid = ''; 
